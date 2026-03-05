@@ -26,3 +26,9 @@ jobs:
 
     - name: Ejecutar pruebas
       run: pytest
+
+    - name: Subir HTML como artefacto
+      uses: actions/upload-artifact@v4
+      with:
+        name: index-html
+        path: index.html
