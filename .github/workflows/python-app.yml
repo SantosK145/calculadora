@@ -1,13 +1,14 @@
-name: Python Calculator CI
+name: Python Calculator CI + Deploy
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-  build:
+
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +23,22 @@ jobs:
     - name: Instalar dependencias
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r requeriments.txt
 
     - name: Ejecutar pruebas
       run: pytest
+
+
+  deploy:
+    needs: test   # 🔥 SOLO corre si test pasa
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar repositorio
+      uses: actions/checkout@v3
+
+    - name: Deploy a GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .
