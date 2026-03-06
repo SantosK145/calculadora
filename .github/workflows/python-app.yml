@@ -2,9 +2,9 @@ name: Python Calculator CI + Deploy
 
 on:
   push:
-    branches: ["main"]
+    branches: ["gh-pages"]
   pull_request:
-    branches: ["main"]
+    branches: ["gh-pages"]
 
 permissions:
   contents: write 
