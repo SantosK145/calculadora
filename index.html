@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Funcional</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #dbdada;
+        }
+
+        #calculator {
+            background: #1f1f1f;
+            padding: 20px;
+            border-radius: 15px;
+            width: 280px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        #display {
+            width: 100%;
+            height: 50px;
+            margin-bottom: 15px;
+            text-align: right;
+            font-size: 24px;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: #111;
+            color: #00ffcc;
+        }
+
+        /* 🔥 GRID DE BOTONES */
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            height: 50px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            background: #2d2d2d;
+            color: white;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button.operator {
+            background: #636e72;
+        }
+
+        button[type="submit"] {
+            background: #00b894;
+            color: black;
+        }
+
+        .clear {
+            grid-column: span 4;
+            background: #d63031;
+        }
+
+        .clear:hover {
+            background: #ff7675;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="calculator" onsubmit="calculate(event)">
+        <h1>Calculadora</h1>
+        <input type="text" id="display" disabled>
+
+        <div class="buttons">
+            <button type="button" onclick="appendToDisplay('7')">7</button>
+            <button type="button" onclick="appendToDisplay('8')">8</button>
+            <button type="button" onclick="appendToDisplay('9')">9</button>
+            <button type="button" class="operator" onclick="appendToDisplay('/')">/</button>
+
+            <button type="button" onclick="appendToDisplay('4')">4</button>
+            <button type="button" onclick="appendToDisplay('5')">5</button>
+            <button type="button" onclick="appendToDisplay('6')">6</button>
+            <button type="button" class="operator" onclick="appendToDisplay('*')">*</button>
+
+            <button type="button" onclick="appendToDisplay('1')">1</button>
+            <button type="button" onclick="appendToDisplay('2')">2</button>
+            <button type="button" onclick="appendToDisplay('3')">3</button>
+            <button type="button" class="operator" onclick="appendToDisplay('-')">-</button>
+
+            <button type="button" onclick="appendToDisplay('0')">0</button>
+            <button type="button" onclick="appendToDisplay('.')">.</button>
+            <button type="button" class="operator" onclick="appendToDisplay('+')">+</button>
+            <button type="submit">=</button>
+
+            <button type="button" class="clear" onclick="clearDisplay()">C</button>
+        </div>
+    </form>
+
+    <script>
+        const display = document.getElementById("display");
+
+        function appendToDisplay(value) {
+            display.value += value;
+        }
+
+        function clearDisplay() {
+            display.value = "";
+        }
+
+        function calculate(event) {
+            event.preventDefault();
+            try {
+                const result = eval(display.value);
+
+                if (!isFinite(result)) {
+                    display.value = "No se puede dividir entre 0";
+                } else if (isNaN(result)) {
+                    display.value = "Error";
+                } else {
+                    display.value = result;
+                }
+
+            } catch {
+                display.value = "Error";
+            }
+        }
+    </script>
+</body>
+
+</html>
